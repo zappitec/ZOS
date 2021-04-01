@@ -28,5 +28,6 @@ ZOS_TASK_START(task_0)
     ZOS_TASK_CALL(TASK_1);
 
 ZOS_TASK_END
+
 #undef SELF
 
