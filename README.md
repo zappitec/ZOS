@@ -25,6 +25,9 @@ ZOS_TASK_START(task_0)
     ZOS_TASK_CALL(TASK_1);
 
 //task ends with the following two statements:
+
 ZOS_TASK_END
+
 #undef SELF
+
 
