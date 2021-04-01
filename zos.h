@@ -14,7 +14,8 @@ zos_taskReturn = &&ZOSI_LABEL; \
 
 #define ZOS_TASK_START(a) \
 void a( void ) {\
-static void * zos_taskReturn = NULL;
+static void * zos_taskReturn = NULL; \
+static int zos_yielded = false;
 
 #define ZOS_TASKINIT \
 if (zos_taskReturn != NULL) \
@@ -23,6 +24,15 @@ goto *zos_taskReturn;
 #define ZOS_TASK_END \
 zos_taskReturn = NULL; \
 return;}
+
+#define ZOS_YIELD \
+ZOSI_PLACE_RETURN_POINT \
+if (! zos_yielded) {\
+    zos_yielded = true; \
+    return; \
+} else { \
+    zos_yielded = false; \
+}
 
 #define ZOS_WAITFOR(condition) \
 do { \
@@ -53,8 +63,7 @@ do { \
     ZOS_TASK_ON(SELF)=false;\
     ZOS_TASK_ON(n)=true;\
     ZOS_TASK_CALLING(n)=SELF; \
-    ZOSI_PLACE_RETURN_POINT \
-    return; \
+    ZOS_YIELD; \
 } while(0);
 
 
