@@ -13,7 +13,7 @@ float time_from(float start) {
 }
 #define SELF TASK_0
 ZOS_TASK_START(task_0)
-    //declare local variables:
+    //declare local variables. All variables should be declared static to persist between calls:
     static float start;
     static float end;
     static int i;
@@ -24,41 +24,24 @@ ZOS_TASK_START(task_0)
     //end initialization
     
     printf("Task0 - BLK0\n");
-    //block0
     
-    //ZOS_IF(false)      
-    
-        ZOS_WAITFOR(sw1)
- 
-        //printf("tsk0 cond 1 satisfied -");         
-        printf("Task0 - BLK1\n");
-        //block1              
+    ZOS_WAITFOR(sw1)
 
-        ZOS_WAITFOR(sw2)
-     
-        //printf("tsk0 cond 2 satisfied -");    
-        printf("Task0 - BLK2\n");
-        //block2
-    //ZOS_ENDIF        
+    //printf("tsk0 cond 1 satisfied -");         
+    printf("Task0 - BLK1\n");
+    //block1              
+
+    ZOS_WAITFOR(sw2)
+
+    //printf("tsk0 cond 2 satisfied -");    
+    printf("Task0 - BLK2\n");
+    //block2
     
-    /*
-    i = 0;
-    ZOS_LOOP
-        i++;
-        printf("Loop %d...\n",i);
-    */
     start = (float)clock();    
     ZOS_WAITFOR(time_from(start)>1)
         
-     
     printf("Task0: After wait\n");
     
-    //ZOS_UNTIL(i>10)
-    
-        
-    //ZOS_WAITFOR(i>4)
-    
-
     printf("Task0: Clock: %f\n",time_from(start)); 
     //printf("tsk0 cond 3 satisfied -");    
     printf("Task0 - BLK3\n");
