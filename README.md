@@ -19,7 +19,7 @@ ZOS_TASK_START(task_0)
     ZOS_WAITFOR(condition)
     
 
-//task ends with the following two statements:
+//task ends with the following statement:
 
 ZOS_TASK_END
 
