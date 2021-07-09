@@ -11,9 +11,9 @@ extern volatile int sw3;
 float time_from(float start) {
     return ((float)clock()-start)/CLOCKS_PER_SEC;
 }
-#define SELF TASK_0
+
 ZOS_TASK_START(task_0)
-    //declare local variables. All variables should be declared static to persist between calls:
+    //declare local variables:
     static float start;
     static float end;
     static int i;
@@ -24,6 +24,7 @@ ZOS_TASK_START(task_0)
     //end initialization
     
     printf("Task0 - BLK0\n");
+    //block0
     
     ZOS_WAITFOR(sw1)
 
@@ -32,11 +33,11 @@ ZOS_TASK_START(task_0)
     //block1              
 
     ZOS_WAITFOR(sw2)
-
+ 
     //printf("tsk0 cond 2 satisfied -");    
     printf("Task0 - BLK2\n");
     //block2
-    
+
     start = (float)clock();    
     ZOS_WAITFOR(time_from(start)>1)
         
@@ -47,11 +48,7 @@ ZOS_TASK_START(task_0)
     printf("Task0 - BLK3\n");
     //block3
 
-    printf ("Calling task 1\n");
-    ZOS_TASK_CALL(TASK_1);
-    printf ("Returning from CALL TASK_1\n"); 
 
 ZOS_TASK_END
-#undef SELF
 
 

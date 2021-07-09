@@ -9,7 +9,7 @@ extern volatile int sw2;
 extern volatile int sw3;
 
 ZOS_TASK_START(task_2)
-    #define SELF TASK_2
+
     static float start;
     static float end;
     //start = clock();
@@ -39,5 +39,5 @@ ZOS_TASK_START(task_2)
     //block3
 
 ZOS_TASK_END
-#undef SELF
+
 
